@@ -14,7 +14,7 @@ void free_string(void *data);
 int main(int argc, char *argv[])
 {
     printf("Loading int demo...\n");
-    list_with_ints();
+    //list_with_ints();
     list_with_strings();
 }
  
@@ -23,7 +23,8 @@ void list_with_ints()
     int numbers = 10;
     printf("Generating list with the first %d positive numbers...\n", numbers);
 
-    int i;
+    int i, firstInList;
+    
     list list;
     list_new(&list, sizeof(int), NULL);
     printf("new list \n");
@@ -33,18 +34,23 @@ void list_with_ints()
 
     //list_for_each(&list, iterate_int);
     unsigned int preDestroySize = list_size(&list);
-    printf("list->logicalLength..%d\npreDestroySize..%u\n", list.logicalLength, preDestroySize);
+    printf("list->logicalLength..%d\npreDestroySize..%u\n\n", list.logicalLength, preDestroySize);
+    
+    list_head(&list, &firstInList, FALSE);
+    printf("list_head..%i\n\n", firstInList);
+    
     list_destroy(&list);
     unsigned int destroySize = list_size(&list);
-    printf("list->logicalLength..%d\ndestroySize..%u\n", list.logicalLength, destroySize);
-    printf("Successfully freed %d numbers...\n", numbers);
+    printf("list->logicalLength..%d\ndestroySize..%u\n\n", list.logicalLength, destroySize);
+    printf("Successfully freed %d numbers...\n\n", numbers);
 }
  
 void list_with_strings()
 {
     int numNames = 5;
     const char *names[] = { "David", "Kevin", "Michael", "Craig", "Jimi" };
-
+    char* firstInList;
+    char* secondInList;
     int i;
     list list;
     list_new(&list, sizeof(char *), free_string);
@@ -57,11 +63,22 @@ void list_with_strings()
  
     //list_for_each(&list, iterate_string);
     unsigned int preDestroySize = list_size(&list);
-    printf("list->logicalLength..%d\npreDestroySize..%u\n", list.logicalLength, preDestroySize);
+    printf("list->logicalLength..%d\npreDestroySize..%u\n\n", list.logicalLength, preDestroySize);
+    
+    list_head(&list, &firstInList, TRUE);
+    printf("list_head then remove..%s\n\n", firstInList);
+    
+    printf("list->logicalLength..%i\n\n", list.logicalLength);
+    
+    list_head(&list, &secondInList, FALSE);
+    printf("list_head no remove..%s\n\n", secondInList);
+    
+    printf("list->logicalLength..%i\n\n", list.logicalLength);
+    
     list_destroy(&list);
     unsigned int destroySize = list_size(&list);
-    printf("list->logicalLength..%d\ndestroySize..%u\n", list.logicalLength, destroySize);
-    printf("Successfully freed %d strings...\n", numNames);
+    printf("list->logicalLength..%d\ndestroySize..%u\n\n", list.logicalLength, destroySize);
+    printf("Successfully freed %d strings...\n\n", numNames);
 }
  
 /*bool iterate_int(void *data) 
