@@ -48,9 +48,10 @@ void list_with_ints()
 void list_with_strings()
 {
     int numNames = 5;
-    const char *names[] = { "David", "Kevin", "Michael", "Craig", "Jimi" };
+    char *names[] = { "David", "Kevin", "Michael", "Craig", "Jimi" };
     char* firstInList;
     char* secondInList;
+    
     int i;
     list list;
     list_new(&list, sizeof(char *), free_string);
@@ -58,7 +59,7 @@ void list_with_strings()
     char *name;
     for(i = 0; i < numNames; i++) {
         name = strdup(names[i]);
-        list_prepend(&list, &name);
+        list_append(&list, &name);
     }
  
     //list_for_each(&list, iterate_string);
@@ -66,12 +67,12 @@ void list_with_strings()
     printf("list->logicalLength..%d\npreDestroySize..%u\n\n", list.logicalLength, preDestroySize);
     
     list_head(&list, &firstInList, TRUE);
-    printf("list_head then remove..%s\n\n", firstInList);
+    printf("list_head and remove..%s\n\n", firstInList);
     
     printf("list->logicalLength..%i\n\n", list.logicalLength);
     
-    list_head(&list, &secondInList, FALSE);
-    printf("list_head no remove..%s\n\n", secondInList);
+    list_tail(&list, &secondInList, TRUE);
+    printf("list_head and remove..%s\n\n", secondInList);
     
     printf("list->logicalLength..%i\n\n", list.logicalLength);
     
@@ -94,5 +95,5 @@ bool iterate_string(void *data)
 }
 */
 void free_string(void *data){
-  free(*(char **)data);
+    free(*(char **)data);
 }

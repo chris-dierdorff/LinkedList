@@ -63,7 +63,17 @@ void list_head(list *list, void *element, bool removeFromList){
         free(currNode);
     }
 }
-void list_tail(list *list, void *element){}
+void list_tail(list *list, void *element, bool removeFromList){
+    listNode *currNode = list->tail->prev;
+    memcpy(element, currNode->data, list->elementSize);
+    if(removeFromList == TRUE){
+        list->tail->prev = currNode->prev;
+        currNode->prev->next = list->tail;
+        list->logicalLength--;
+        free(currNode->data);
+        free(currNode);
+    }
+}
 
 unsigned int list_size(list *list){
     return list->logicalLength;
