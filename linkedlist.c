@@ -49,7 +49,12 @@ void list_append(list *list, void *element){
     list->logicalLength++;
 }
 
-void list_for_each(list *list, listIterator iterator){}
+void list_for_each(list *list, listIterator iterator){
+    listNode *currNode = list->head->next;
+    while(currNode != list->tail){
+        if(iterator(currNode->data)) currNode = currNode->next;
+    }
+}
 
 void list_head(list *list, void *element, bool removeFromList){
     listNode *currNode = list->head->next;

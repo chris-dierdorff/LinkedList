@@ -8,7 +8,7 @@ void list_with_ints();
 void list_with_strings();
  
 //bool iterate_int(void *data);
-//bool iterate_string(void *data);
+bool iterate_string(void *data);
 void free_string(void *data);
 
 int main(int argc, char *argv[])
@@ -62,7 +62,7 @@ void list_with_strings()
         list_append(&list, &name);
     }
  
-    //list_for_each(&list, iterate_string);
+    list_for_each(&list, iterate_string);
     unsigned int preDestroySize = list_size(&list);
     printf("list->logicalLength..%d\npreDestroySize..%u\n\n", list.logicalLength, preDestroySize);
     
@@ -87,13 +87,13 @@ void list_with_strings()
   printf("Found value: %d\n", *(int *)data);
   return TRUE;
 }
- 
+*/ 
 bool iterate_string(void *data)
 {
   printf("Found string value: %s\n", *(char **)data);
   return TRUE;
 }
-*/
+
 void free_string(void *data){
     free(*(char **)data);
 }
